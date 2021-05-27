@@ -1,24 +1,20 @@
 {
     "env": {
-        "es6": true
+        "es2021": true
     },
     "extends": [
-      "eslint:recommended",
-      "plugin:react/recommended",
-      "plugin:@typescript-eslint/recommended",
-      "airbnb",
-      "prettier"
+        "plugin:react/recommended",
+        "airbnb",
+        "plugin:@typescript-eslint/recommended",
+        "prettier/@typescript-eslint",
+        "plugin:prettier/recommended"
     ],
-    "globals": {
-      "Atomics": "readonly",
-      "SharedArrayBuffer": "readonly"
-    },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
         },
-        "ecmaVersion": 11,
+        "ecmaVersion": 12,
         "sourceType": "module"
     },
     "plugins": [
@@ -28,24 +24,33 @@
         "prettier"
     ],
     "rules": {
-        "prettier/prettier": "warn",
-        "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
-        "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/no-non-null-assertion": "off",
-        "@typescript-eslint/no-unused-vars": "warn",
+        "prettier/prettier": "error",
+        "react/jsx-one-expression-per-line": "off",
+        "react/jsx-props-no-spreading": "off",
+        "react/prop-types": "off",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
         "no-unused-expressions": "off",
-        "no-console": ["warn", { "allow": ["warn", "error"] }],
-        "no-empty-function": "warn",
-        "no-unused-vars": "warn",
-        "eqeqeq": "warn",
-        "no-use-before-define": "off"
+        "react/jsx-filename-extension": [1, {"extensions": [".tsx"]}],
+        "import/prefer-default-export": "off",
+        "@typescript-eslint/explicit-function-return-type": [
+            "error",
+            {
+                "allowExpressions": true
+            }
+        ],
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "ts": "never",
+                "tsx": "never"
+            }
+        ]
     },
     "settings": {
-      "import/parsers": {
-        "@typescript-eslint/parser": [
-            ".ts",
-            ".tsx"
-        ]
-    }
+        "import/resolver": {
+            "typescript": {}
+        }
     }
 }
