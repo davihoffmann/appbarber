@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
+import api from '../../services/api';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -25,6 +26,7 @@ const SignUp: React.FC = () => {
     const formRef = useRef<FormHandles>(null);
     const emailInputRef = useRef<TextInput>(null);
     const passwordInputRef = useRef<TextInput>(null);
+
     const navigation = useNavigation();
 
     const handleSubmit = useCallback(async (data: SignUpFormData) => {
@@ -40,6 +42,12 @@ const SignUp: React.FC = () => {
             await schema.validate(data, {
                 abortEarly: false,
             });
+
+            await api.post('/users', data);
+
+            Alert.alert('Cadastro realizado com sucesso!', 'Você já pode fazer login na aplicação!');
+
+            navigation.goBack();
         } catch (err) {
             if (err instanceof Yup.ValidationError) {
                 const errors = getValidationErrors(err);
