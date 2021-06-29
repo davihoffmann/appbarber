@@ -1,17 +1,30 @@
-import React, { ReactElement } from 'react';
-import { View, Button } from 'react-native';
+import React, { ReactElement, useCallback } from 'react';
+import { useNavigation } from '@react-navigation/core';
+
 import { useAuth } from '../../hooks/auth';
 
-export default function Dashboard(): ReactElement {
-    const { signOut } = useAuth();
+import { Container, Header, HeaderTitle, UserName, ProfileButton, UserAvatar } from './styles';
 
-    function handleSignOut(): void {
-        signOut();
-    }
+export default function Dashboard(): ReactElement {
+    const { user } = useAuth();
+    const { navigate } = useNavigation();
+
+    const navigateToProfile = useCallback(() => {
+        navigate('Profile');
+    }, [navigate]);
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
-            <Button title="Sair" onPress={handleSignOut} />
-        </View>
+        <Container>
+            <Header>
+                <HeaderTitle>
+                    Bem Vindo, {'\n'}
+                    <UserName>{user.name}</UserName>
+                </HeaderTitle>
+
+                <ProfileButton onPress={navigateToProfile}>
+                    <UserAvatar source={{ uri: user.avatar_url }} />
+                </ProfileButton>
+            </Header>
+        </Container>
     );
 }
