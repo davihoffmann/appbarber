@@ -40,7 +40,7 @@ export default function Dashboard(): ReactElement {
             <ProvidersList
                 data={providers}
                 keyExtractor={item => item.id}
-                renderItem={({ item }) => <UserName>{item.name}</UserName>}
+                renderItem={({ item }) => <UserName>{item.id}</UserName>}
             />
         </Container>
     );
