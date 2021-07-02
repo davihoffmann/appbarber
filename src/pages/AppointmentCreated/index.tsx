@@ -1,10 +1,24 @@
-import React, { ReactElement, useCallback } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, { ReactElement, useCallback, useMemo } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Feather';
+import { format } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
+
 import { Container, Title, Description, OkButton, OkButtonText } from './styles';
+
+interface RouteParams {
+    date: number;
+}
 
 export default function AppointmentCreated(): ReactElement {
     const { reset } = useNavigation();
+    const { params } = useRoute();
+
+    const routeParams = params as RouteParams;
+
+    const formattedDate = useMemo(() => {
+        return format(routeParams.date, "EEEE', dia' dd 'de' MMMM 'de' yyyy 'às' HH:mm'h'", { locale: ptBR });
+    }, [routeParams.date]);
 
     const handleOkPressed = useCallback(() => {
         reset({
@@ -23,7 +37,7 @@ export default function AppointmentCreated(): ReactElement {
 
             <Title>Agendamento Concluido</Title>
 
-            <Description>terça, dia 14 de março de 2020 às 12:00</Description>
+            <Description>{formattedDate}</Description>
 
             <OkButton onPress={handleOkPressed}>
                 <OkButtonText>ok</OkButtonText>
