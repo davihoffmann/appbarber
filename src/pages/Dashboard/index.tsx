@@ -24,7 +24,7 @@ import {
 } from './styles';
 
 export default function Dashboard(): ReactElement {
-    const { user, signOut } = useAuth();
+    const { user } = useAuth();
     const { navigate } = useNavigation();
 
     const [providers, setProviders] = useState<Provider[]>([]);
@@ -36,9 +36,8 @@ export default function Dashboard(): ReactElement {
     }, []);
 
     const navigateToProfile = useCallback(() => {
-        // navigate('Profile');
-        signOut();
-    }, [signOut]);
+        navigate('Profile');
+    }, [navigate]);
 
     const navigateToCreateAppointment = useCallback(
         (providerId: string) => {
